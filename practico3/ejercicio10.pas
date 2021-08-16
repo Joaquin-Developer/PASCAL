@@ -9,14 +9,12 @@ de la cifra de las centenas. Su programa no
 necesita controlar que el entero ingresado 
 tenga hasta cuatro cifras (asuma que así será).
 }
-var num : Integer;
-begin
-    writeln('Ingresa el numero: ');
-    readln(num);
-    if num > 999 then
-        writeln(num / 1000:0:3)
-    else
-        writeln(num);
-
-
-end.
+Var num : Integer;
+Begin
+    WriteLn('Enter a number: ');
+    ReadLn(num);
+    If num > 999 Then
+        WriteLn(num / 1000:0:3)
+    Else
+        WriteLn(num);
+End.

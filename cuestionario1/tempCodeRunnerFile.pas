@@ -1,0 +1,2 @@
+
+    writeLn(d);
