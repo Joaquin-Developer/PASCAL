@@ -7,9 +7,9 @@ var
 Begin
     Write('Ingresar un numero: ');
     ReadLn(num);
-    fact := num;
+    fact := 1;
 
-    For i := (num - 1) DownTo 1 Do
+    For i := 2 To num Do
     Begin
         fact := fact * i;
     End;
