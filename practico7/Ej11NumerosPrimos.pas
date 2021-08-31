@@ -10,7 +10,7 @@ Begin
 
     If num > 2 Then Begin
         For i := 2 To (num - 1) Do
-            If (num MOD i = 0) Then EsPrimo := False
+            If (num Mod i = 0) Then EsPrimo := False
     End;
 End;
 
