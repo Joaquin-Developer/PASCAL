@@ -17,6 +17,6 @@ Begin
             sumaPares := sumaPares + numero;
     Until numero = -1;
 
-    WriteLn('Suma de los numeros pares: ', sumaPares);
+    WriteLn('Suma de los numeros pares: ', sumaPares)
 
 End.
