@@ -1,17 +1,18 @@
 Program ej7;
-
-Var n, i, j, number : Integer;
+Var 
+    length, i, j, max : Integer;
 
 Begin
-    Write('Ingresar valor para n: ');
-    ReadLn(n);
-    Write('Ingrese ', n, ' enteros: ');
-    For i := 1 To n Do Begin
-        ReadLn(number);
-        For j := 1 To number Do Begin
-            Write('*');
+    Write('Digite total de numeros a ingresar: ');
+    ReadLn(length);
+    For i := 1 To length Do Begin
+        Read(max);
+        For j := 1 To max Do Begin
+            Write('*')
         End;
-        WriteLn();
+        WriteLn()
+
     End;
+
 
 End.
