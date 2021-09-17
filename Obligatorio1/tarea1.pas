@@ -20,7 +20,7 @@ Var
     longitudParticion, valorX, suma : Real;
 Begin
     suma := 0;
-    longitudParticion := Abs(der - izq) / subintervalos;
+    longitudParticion := (der - izq) / subintervalos;
 
     For i := 1 To subintervalos Do
     Begin
@@ -38,14 +38,14 @@ Precondición: izq < der. }
 Function riemannHasta(izq, der : Real; delta : Real) : Integer;
 Var
     diferencia : Real;
-    subintervalos : Integer;
+    i : Integer; { subintervalos i }
 Begin
-    subintervalos := Trunc(der) - Trunc(izq) + 1;
+    i := 1;
     Repeat
-        subintervalos := subintervalos -1 ;
-        diferencia := Abs(sumaRiemann(izq, der, subintervalos)) - Abs(sumaRiemann(izq, der, subintervalos - 1))
+        i := i + 1 ;
+        diferencia := sumaRiemann(izq, der, i) - sumaRiemann(izq, der, i - 1)
 
     Until diferencia < delta;
 
-    riemannHasta := subintervalos;
+    riemannHasta := i;
 End;
