@@ -1,16 +1,19 @@
+
 Program ej3;
 
-Const 
-    N = ...;
-Type 
-    Arreglo = Array [1..N] Of Integer;
+// Const 
+//     N =   ..;
 
-Procedure Carga(var arr: Arreglo);
+Type 
+    Arreglo =   Array [1..5] Of Integer;
+
+Procedure Carga(Var arr: Arreglo);
 Begin
 
 End;
 
-Begin 
+Begin
+    WriteLn('"Hola"');
+    Read()
 
-
-End;
+End.
