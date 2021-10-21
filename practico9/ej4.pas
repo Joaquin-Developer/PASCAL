@@ -1,5 +1,4 @@
 Program ej4;
-
 Var
     x : Integer;
 
