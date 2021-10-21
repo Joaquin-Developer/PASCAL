@@ -6,6 +6,7 @@ Program ej3;
 
 Type 
     Arreglo =   Array [1..5] Of Integer;
+Var x : Integer;
 
 Procedure Carga(Var arr: Arreglo);
 Begin
@@ -14,6 +15,6 @@ End;
 
 Begin
     WriteLn('"Hola"');
-    Read()
+    Read(x)
 
 End.
