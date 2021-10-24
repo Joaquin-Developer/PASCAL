@@ -1,0 +1,3 @@
+m minas/m3.inp
+m minas/m6.inp
+q

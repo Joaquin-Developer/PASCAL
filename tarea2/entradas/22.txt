@@ -1,0 +1,2 @@
+m minas/m7.inp
+d 10 10

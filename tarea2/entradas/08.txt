@@ -1,0 +1,2 @@
+m minas/m1.inp
+d 2 2
