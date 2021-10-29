@@ -5,10 +5,12 @@ Type
                 hh : 0..23;
                 mm : 0..59;
             End;
+    PInteger = ^Integer;
 Var
    h1, h2: Hora;
 
-Begin 
+
+Begin
     h1.hh := 21;
     h1.mm := 30;
     h2.hh := 21;
