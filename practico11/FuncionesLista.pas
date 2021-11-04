@@ -79,5 +79,7 @@ Begin
     Print(miLista);
 	Add(4, miLista);
     Print(miLista);
+	AddToEnd(5, miLista);
+	Print(miLista);
 	WriteLn('Tamaño Final de la lista: ', Length(miLista));
 End.
