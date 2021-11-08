@@ -5,7 +5,18 @@ Devuelve en t un Tablero para el cual todas sus Casillas:
   * No tienen minas alrededor
 }
 Procedure IniciarTableroVacio(Var t : Tablero);
+Var 
+  i, j : Integer;
 Begin
+    For i := 1 To CANT_FIL Do 
+    Begin 
+      For j := 1 To CANT_COL Do 
+      Begin 
+        t[i, j].oculto := True;
+        // Seguir:
+        t[i, j].tipo := 0;
+      End;
+    End;
 End;
 
 
@@ -13,7 +24,7 @@ End;
 Para toda Casilla c del Tablero que es una Mina, c deja de estar oculta
 }
 Procedure DesocultarMinas(Var t : Tablero);
-Begin 
+Begin
 End;
 
 {
@@ -21,9 +32,11 @@ Devuelve true si tanto la fila f como la columna c son válidas,
 es decir corresponden a una casilla del tablero.
 De lo contrario devuelve false.
 }
-Function EsPosicionValida(f, c : Integer) : Boolean;
-Begin 
+Function EsPosicionValida(f, c : Integer) :   Boolean;
+Begin
 End;
+
+
 
 {
 Agrega minas al Tablero t en cada una de las casillas c correspondientes a
@@ -34,7 +47,7 @@ que queden libres. Este deberá contener la cantidad de casillas adyacentes que
 son minas.
 }
 Procedure AgregarMinas(m : Minas; Var t : Tablero);
-Begin 
+Begin
 End;
 
 {
@@ -46,7 +59,8 @@ entonces se agrega la Posicion correspondiente a dicha casilla al final de la
 listaPos libres.
 }
 Procedure Desocultar(f, c : Integer; Var t : Tablero; Var libres : ListaPos);
-Begin 
+Begin
+
 End;
 
 {
@@ -54,8 +68,8 @@ Desoculta (ver procedimiento Desocultar) todas las casillas adyacentes a la
 Casilla del Tablero t asociada a la fila f y la columna c.
 }
 Procedure DesocultarAdyacentes(f, c : Integer; Var t : Tablero;
-                                Var libres : ListaPos);
-Begin 
+                               Var libres : ListaPos);
+Begin
 End;
 
 {
@@ -67,13 +81,15 @@ no tienen minas alrededor, y así sucesivamente hasta que no queden más casilla
 adyacentes que cumplan con estas condiciones.
 }
 Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
-Begin 
+Begin
 End;
+
+
 
 {
 Devuelve true si no existe ninguna Casilla en el Tablero t que cumpla con estar 
 oculta y ser Libre. En otro caso devuelve false.
 }
-Function EsTableroCompleto(t : Tablero) : Boolean;
-Begin 
+Function EsTableroCompleto(t : Tablero) :   Boolean;
+Begin
 End;
