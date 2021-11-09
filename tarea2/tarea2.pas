@@ -31,10 +31,8 @@ Begin
   For i := 1 To CANT_FIL Do 
   Begin 
     For j := 1 To CANT_COL Do 
-    Begin 
       If t[i, j].tipo = Mina Then 
         t[i, j].oculto := False;
-    End;
   End;
 End;
 
@@ -43,8 +41,9 @@ Devuelve true si tanto la fila f como la columna c son válidas,
 es decir corresponden a una casilla del tablero.
 De lo contrario devuelve false.
 }
-Function EsPosicionValida(f, c : Integer) :   Boolean;
+Function EsPosicionValida(f, c : Integer): Boolean;
 Begin
+  EsPosicionValida := (f > 0) And (f <= CANT_FIL) And (c > 0) And (c <= CANT_COL)
 End;
 
 {
@@ -97,6 +96,6 @@ End;
 Devuelve true si no existe ninguna Casilla en el Tablero t que cumpla con estar 
 oculta y ser Libre. En otro caso devuelve false.
 }
-Function EsTableroCompleto(t : Tablero) :   Boolean;
+Function EsTableroCompleto(t : Tablero): Boolean;
 Begin
 End;
