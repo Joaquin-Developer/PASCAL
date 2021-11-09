@@ -24,7 +24,18 @@ End;
 Para toda Casilla c del Tablero que es una Mina, c deja de estar oculta
 }
 Procedure DesocultarMinas(Var t : Tablero);
+Var
+  i : RangoFilas;
+  j : RangoColum;
 Begin
+  For i := 1 To CANT_FIL Do 
+  Begin 
+    For j := 1 To CANT_COL Do 
+    Begin 
+      If t[i, j].tipo = Mina Then 
+        t[i, j].oculto := False;
+    End;
+  End;
 End;
 
 {
