@@ -5,20 +5,20 @@ Devuelve en t un Tablero para el cual todas sus Casillas:
   * No tienen minas alrededor
 }
 Procedure IniciarTableroVacio(Var t : Tablero);
-Var 
-  i, j : Integer;
+Var
+  i : RangoFilas;
+  j : RangoColum;
 Begin
-    For i := 1 To CANT_FIL Do 
+  For i := 1 To CANT_FIL Do 
+  Begin 
+    For j := 1 To CANT_COL Do 
     Begin 
-      For j := 1 To CANT_COL Do 
-      Begin 
-        t[i, j].oculto := True;
-        // Seguir:
-        t[i, j].tipo := 0;
-      End;
+      t[i, j].oculto := True;
+      t[i, j].tipo := Libre;
+      t[i, j].minasAlrededor := 0
     End;
+  End;
 End;
-
 
 {
 Para toda Casilla c del Tablero que es una Mina, c deja de estar oculta
@@ -35,8 +35,6 @@ De lo contrario devuelve false.
 Function EsPosicionValida(f, c : Integer) :   Boolean;
 Begin
 End;
-
-
 
 {
 Agrega minas al Tablero t en cada una de las casillas c correspondientes a
@@ -83,8 +81,6 @@ adyacentes que cumplan con estas condiciones.
 Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
 Begin
 End;
-
-
 
 {
 Devuelve true si no existe ninguna Casilla en el Tablero t que cumpla con estar 
