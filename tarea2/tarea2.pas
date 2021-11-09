@@ -68,6 +68,10 @@ listaPos libres.
 }
 Procedure Desocultar(f, c : Integer; Var t : Tablero; Var libres : ListaPos);
 Begin
+  If EsPosicionValida(f, c) Then 
+  Begin
+    // Seguir... 
+  End;
 
 End;
 
