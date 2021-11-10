@@ -9,9 +9,9 @@ Var
   i : RangoFilas;
   j : RangoColum;
 Begin
-  For i := 1 To CANT_FIL Do 
+  For i := 1 To CANT_FIL Do
   Begin 
-    For j := 1 To CANT_COL Do 
+    For j := 1 To CANT_COL Do
     Begin 
       t[i, j].oculto := True;
       t[i, j].tipo := Libre;
@@ -55,7 +55,15 @@ que queden libres. Este deberá contener la cantidad de casillas adyacentes que
 son minas.
 }
 Procedure AgregarMinas(m : Minas; Var t : Tablero);
+Var 
+  i : 0..MAX_MIN;
 Begin
+  // Recorro el array con tope Minas
+  // Por cada mina obtengo su posicion, y modifico el tablero t
+  // For i := 0 To m.tope Do 
+  // Begin 
+    
+  // End;
 End;
 
 {
@@ -101,5 +109,25 @@ Devuelve true si no existe ninguna Casilla en el Tablero t que cumpla con estar
 oculta y ser Libre. En otro caso devuelve false.
 }
 Function EsTableroCompleto(t : Tablero): Boolean;
+Var
+  i : RangoFilas;
+  j : RangoColum;
+  tableroCompleto: Boolean;
 Begin
+  tableroCompleto := True;
+  i := 1;
+  j := 1;
+  While (i <= CANT_FIL) Or (Not tableroCompleto) Do
+  Begin
+    While (j <= CANT_COL) Or (Not tableroCompleto) Do 
+    Begin 
+      If (t[i, j].oculto) And (t[i, j].tipo = Libre) Then 
+        tableroCompleto := False;
+      j := j + 1
+    End;
+    i := i + 1 
+  End;
+
+  EsTableroCompleto := tableroCompleto
+
 End;
