@@ -166,10 +166,10 @@ Begin
     PrimeraPosicion(pos, libres);
     With pos Do 
     Begin 
-      If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then 
-      Begin 
         DesocultarAdyacentes(fila, columna, t, libres);
-      End;
+      // If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then 
+      // Begin 
+      // End;
     End;
 
   Until libres = Nil;
