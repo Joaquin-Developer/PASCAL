@@ -115,11 +115,13 @@ Begin
   If (EsPosicionValida(f, c)) And (t[f, c].tipo = Libre) Then 
   Begin
     t[f, c].oculto := False;
-    pos.fila := f;
-    pos.columna := c;
 
     If (CalcularMinasAdyacentes(f, c, t) = 0) Then
-      AgregarAlFinal(pos, libres);
+    Begin
+      pos.fila := f;
+      pos.columna := c; 
+      AgregarAlFinal(pos, libres)
+    End;
   End;
 
 End;
@@ -134,7 +136,7 @@ Var
 Begin
   For i := (f - 1) To (f + 1) Do 
     For j := (c - 1) To (c + 1) Do
-      If (i <> f) And (j <> c) Then 
+      If EsPosicionValida(i, j) And (i <> f) And (j <> c) Then 
         Desocultar(i, j, t, libres);
 End;
 
@@ -152,73 +154,33 @@ Var
   i, j: Integer;
   pos: Posicion;
 Begin
+  pos.fila := f;
+  pos.columna := c;
   // Inicalizo la Lista y los elementos del record:
   // Lista vacia al comienzo, apunta a null:
   libres := Nil;
-  // Desoculto:
-  Desocultar(f, c, t, libres);
-  // quito de libres:
-  pos.fila := f;
-  pos.columna := c;
-  PrimeraPosicion(pos, libres);
-  // Desoculto adyacentes:
-  // i := pos.fila;
-  // j := pos.columna;
+  // Desoculto posicion inicial:
+  Desocultar(pos.fila, pos.columna, t, libres);
 
-  pos.fila := f;
-  pos.columna := c;
-
-
-  While libres <> Nil Do 
-  Begin 
-    DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
-
+  Repeat
     PrimeraPosicion(pos, libres);
-  End;
+    With pos Do 
+    Begin 
+      If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then 
+      Begin 
+        DesocultarAdyacentes(fila, columna, t, libres);
+      End;
+    End;
 
-
-  // If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
-  // Begin
-  //   DesocultarAdyacentes(f, c, t, libres);
-  //   PrimeraPosicion(pos, libres);
-
-
-
-
-  //   While libres <> Nil Do 
-  //   Begin 
-  //     For i := (f - 1) To (f + 1) Do 
-  //     Begin
-  //       For j := (c - 1) To (c + 1) Do 
-  //       Begin 
-  //         If EsPosicionValida(i, j) And (t[i, j].tipo = Libre) And (CalcularMinasAdyacentes(i, j, t) = 0) Then 
-  //           pos.fila := i;
-  //           pos.columna := j;
-  //           DesocultarAdyacentes(i, j, t, libres);
-  //       End;
-  //     End;
-  //   End;
+  Until libres = Nil;
 
 
 
-
-    // While libres <> Nil Do 
-    // Begin 
-    //   If EsPosicionValida()
-    //   For i := (f - 1) To (f + 1) Do 
-    //   Begin
-    //     For j := (c - 1) To (c + 1) Do 
-    //     Begin 
-    //       If EsPosicionValida(i, j) And (t[i, j].tipo = Libre) And (CalcularMinasAdyacentes(i, j, t) = 0) Then 
-    //         p.fila := i;
-    //         p.columna := j;
-    //         DesocultarAdyacentes(i, j, t, libres);
-    //     End;
-    //   End;
-    //   PrimeraPosicion(p, libres);
-    // End;
+  // While libres <> Nil Do 
+  // Begin 
 
   // End;
+
 
 End;
 
