@@ -149,7 +149,24 @@ no tienen minas alrededor, y así sucesivamente hasta que no queden más casilla
 adyacentes que cumplan con estas condiciones.
 }
 Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
+Var 
+  libres : ListaPos;
+  pos: Posicion;
+  celda : CeldaPos;
 Begin
+  // Inicalizo la Lista y los elementos del record:
+  pos.fila := f;
+  pos.columna := c;
+
+  celda.pos := pos;
+  celda.sig := Nil;
+  
+  libres := celda;
+
+  Desocultar(f, c, t, libres);
+
+
+
 End;
 
 {
