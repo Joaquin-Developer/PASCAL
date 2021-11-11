@@ -118,7 +118,7 @@ Begin
     pos.fila := f;
     pos.columna := c;
 
-    If CalcularMinasAdyacentes(f, c, t) = 0 Then
+    If (CalcularMinasAdyacentes(f, c, t) = 0) Then
       AgregarAlFinal(pos, libres);
   End;
 
@@ -150,6 +150,7 @@ Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
 Var 
   libres : ListaPos;
   i, j: Integer;
+  p: Posicion;
 Begin
   // Inicalizo la Lista y los elementos del record:
   // Lista vacia al comienzo, apunta a null:
@@ -158,16 +159,25 @@ Begin
   Desocultar(f, c, t, libres);
   // Desoculto adyacentes:
   If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
+  Begin
     DesocultarAdyacentes(f, c, t, libres);
 
-
-  For i := (f - 1) To (f + 1) Do 
-  Begin
-    For j := (c - 1) To (c + 1) Do 
+    While libres <> Nil Do 
     Begin 
-      If EsPosicionValida(i, j) And (t[i, j].tipo = Libre) And (CalcularMinasAdyacentes(i, j, t) = 0) Then 
-        DesocultarAdyacentes(i, j, t, libres);
+      If EsPosicionValida()
+      For i := (f - 1) To (f + 1) Do 
+      Begin
+        For j := (c - 1) To (c + 1) Do 
+        Begin 
+          If EsPosicionValida(i, j) And (t[i, j].tipo = Libre) And (CalcularMinasAdyacentes(i, j, t) = 0) Then 
+            p.fila := i;
+            p.columna := j;
+            DesocultarAdyacentes(i, j, t, libres);
+        End;
+      End;
+      PrimeraPosicion(p, libres);
     End;
+
   End;
 
 End;
