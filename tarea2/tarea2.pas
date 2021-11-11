@@ -154,15 +154,15 @@ Var
   pos: Posicion;
   celda : CeldaPos;
 Begin
+  // pos.fila := f;
+  // pos.columna := c;
+  // celda.pos := pos;
+  // celda.sig := Nil;
+
   // Inicalizo la Lista y los elementos del record:
-  pos.fila := f;
-  pos.columna := c;
-
-  celda.pos := pos;
-  celda.sig := Nil;
-  
-  libres := celda;
-
+  // Lista vacia al comienzo, apunta a null:
+  libres := Nil;
+  // Desoculto:
   Desocultar(f, c, t, libres);
 
 
