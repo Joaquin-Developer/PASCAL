@@ -55,11 +55,9 @@ Begin
   minasAdyacentes := 0;
 
   For i := (f - 1) To (f + 1) Do 
-  Begin 
     For j := (c - 1) To (c + 1) Do 
       If EsPosicionValida(i, j) And (t[i, j].tipo = Mina) Then 
         minasAdyacentes := minasAdyacentes + 1;
-  End;
 
   CalcularMinasAdyacentes := minasAdyacentes
 End;
@@ -84,7 +82,7 @@ Begin
   {
     NOTA: Algoritmo ineficiente - Mejorarlo
   }
-  For i := 0 To m.tope Do 
+  For i := 1 To m.tope Do 
   Begin 
     With m.elems[i] Do
       t[fila, columna].tipo := Mina;
@@ -153,19 +151,22 @@ Var
   libres : ListaPos;
   pos: Posicion;
   celda : CeldaPos;
+  i, j: Integer;
 Begin
-  // pos.fila := f;
-  // pos.columna := c;
-  // celda.pos := pos;
-  // celda.sig := Nil;
-
   // Inicalizo la Lista y los elementos del record:
   // Lista vacia al comienzo, apunta a null:
   libres := Nil;
   // Desoculto:
   Desocultar(f, c, t, libres);
-
-
+  // Desoculto adyacentes:
+  For i := (f - 1) To (f + 1) Do 
+  Begin
+    For j := (c - 1) To (c + 1) Do 
+    Begin 
+      If EsPosicionValida(i, j) And (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
+        DesocultarAdyacentes(f, c, t, libres);
+    End;
+  End;
 
 End;
 
