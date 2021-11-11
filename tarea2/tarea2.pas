@@ -135,8 +135,9 @@ Var
   i, j : Integer;
 Begin
   For i := (f - 1) To (f + 1) Do 
-    For j := (c - 1) To (c + 1) Do 
-      Desocultar(i, j, t, libres);
+    For j := (c - 1) To (c + 1) Do
+      If (i <> f) And (j <> c) Then 
+        Desocultar(i, j, t, libres);
 End;
 
 {
