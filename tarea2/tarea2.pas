@@ -56,7 +56,7 @@ Begin
 
   For i := (f - 1) To (f + 1) Do 
     For j := (c - 1) To (c + 1) Do 
-      If EsPosicionValida(i, j) And (t[i, j].tipo = Mina) Then 
+      If (i <> f) And (j <> c) And (EsPosicionValida(i, j)) And (t[i, j].tipo = Mina) Then 
         minasAdyacentes := minasAdyacentes + 1;
 
   CalcularMinasAdyacentes := minasAdyacentes
@@ -149,8 +149,6 @@ adyacentes que cumplan con estas condiciones.
 Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
 Var 
   libres : ListaPos;
-  pos: Posicion;
-  celda : CeldaPos;
   i, j: Integer;
 Begin
   // Inicalizo la Lista y los elementos del record:
@@ -159,12 +157,16 @@ Begin
   // Desoculto:
   Desocultar(f, c, t, libres);
   // Desoculto adyacentes:
+  If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
+    DesocultarAdyacentes(f, c, t, libres);
+
+
   For i := (f - 1) To (f + 1) Do 
   Begin
     For j := (c - 1) To (c + 1) Do 
     Begin 
-      If EsPosicionValida(i, j) And (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
-        DesocultarAdyacentes(f, c, t, libres);
+      If EsPosicionValida(i, j) And (t[i, j].tipo = Libre) And (CalcularMinasAdyacentes(i, j, t) = 0) Then 
+        DesocultarAdyacentes(i, j, t, libres);
     End;
   End;
 
@@ -185,16 +187,27 @@ Begin
   // Recorro el tablero hasta que haya una casilla que sea oculta y libre
   // o hasta llegar al ultimo elemento del tablero
 
-  While (i <= CANT_FIL) Or (tableroCompleto) Do
-  Begin
-    While (j <= CANT_COL) Or (tableroCompleto) Do 
+
+  For i := 1 To CANT_FIL Do
+  Begin 
+    For j := 1 To CANT_COL Do
     Begin 
       If (t[i, j].oculto) And (t[i, j].tipo = Libre) Then 
         tableroCompleto := False;
-      j := j + 1
     End;
-    i := i + 1 
   End;
+
+
+  // While (i <= CANT_FIL) Or (tableroCompleto) Do
+  // Begin
+  //   While (j <= CANT_COL) Or (tableroCompleto) Do 
+  //   Begin 
+  //     If (t[i, j].oculto) And (t[i, j].tipo = Libre) Then 
+  //       tableroCompleto := False;
+  //     j := j + 1
+  //   End;
+  //   i := i + 1 
+  // End;
 
   EsTableroCompleto := tableroCompleto
 End;
