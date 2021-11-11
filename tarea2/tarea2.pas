@@ -46,6 +46,25 @@ Begin
   EsPosicionValida := (f > 0) And (f <= CANT_FIL) And (c > 0) And (c <= CANT_COL)
 End;
 
+
+// Sub programa auxiliar:
+Function CalcularMinasAdyacentes(f, c: Integer; t: Tablero): Integer;
+Var 
+  i, j, minasAdyacentes : Integer;
+Begin
+  minasAdyacentes := 0;
+
+  For i := (f - 1) To (f + 1) Do 
+  Begin 
+    For j := (c - 1) To (c + 1) Do 
+      If EsPosicionValida(i, j) And (t[i, j].tipo = Mina) Then 
+        minasAdyacentes := minasAdyacentes + 1;
+  End;
+
+  CalcularMinasAdyacentes := minasAdyacentes
+End;
+
+
 {
 Agrega minas al Tablero t en cada una de las casillas c correspondientes a
 posiciones contenidas en m, es decir que dichas casillas cambien su tipo a Mina.
@@ -57,13 +76,30 @@ son minas.
 Procedure AgregarMinas(m : Minas; Var t : Tablero);
 Var 
   i : 0..MAX_MIN;
+  f : RangoFilas;
+  c : RangoColum;
 Begin
   // Recorro el array con tope Minas
   // Por cada mina obtengo su posicion, y modifico el tablero t
-  // For i := 0 To m.tope Do 
-  // Begin 
-    
-  // End;
+  {
+    NOTA: Algoritmo ineficiente - Mejorarlo
+  }
+  For i := 0 To m.tope Do 
+  Begin 
+    With m.elems[i] Do
+      t[fila, columna].tipo := Mina;
+  End;
+
+  For f := 1 To CANT_FIL Do
+  Begin 
+    For c := 1 To CANT_COL Do
+    Begin 
+      With t[f, c] Do 
+        If tipo = Libre Then 
+          minasAlrededor := CalcularMinasAdyacentes(f, c, t);
+    End;
+  End;
+  
 End;
 
 {
@@ -87,8 +123,7 @@ End;
 Desoculta (ver procedimiento Desocultar) todas las casillas adyacentes a la
 Casilla del Tablero t asociada a la fila f y la columna c.
 }
-Procedure DesocultarAdyacentes(f, c : Integer; Var t : Tablero;
-                               Var libres : ListaPos);
+Procedure DesocultarAdyacentes(f, c : Integer; Var t : Tablero; Var libres : ListaPos);
 Begin
 End;
 
@@ -117,6 +152,9 @@ Begin
   tableroCompleto := True;
   i := 1;
   j := 1;
+  // Recorro el tablero hasta que haya una casilla que sea oculta y libre
+  // o hasta llegar al ultimo elemento del tablero
+
   While (i <= CANT_FIL) Or (Not tableroCompleto) Do
   Begin
     While (j <= CANT_COL) Or (Not tableroCompleto) Do 
