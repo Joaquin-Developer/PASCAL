@@ -111,10 +111,17 @@ entonces se agrega la Posicion correspondiente a dicha casilla al final de la
 listaPos libres.
 }
 Procedure Desocultar(f, c : Integer; Var t : Tablero; Var libres : ListaPos);
+Var 
+  pos : Posicion;
 Begin
-  If EsPosicionValida(f, c) Then 
+  If (EsPosicionValida(f, c)) And (t[f, c].tipo = Libre) Then 
   Begin
-    // Seguir... 
+    t[f, c].oculto := False;
+    pos.fila := f;
+    pos.columna := c;
+
+    If CalcularMinasAdyacentes(f, c, t) = 0 Then
+      AgregarAlFinal(pos, libres);
   End;
 
 End;
