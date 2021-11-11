@@ -131,7 +131,12 @@ Desoculta (ver procedimiento Desocultar) todas las casillas adyacentes a la
 Casilla del Tablero t asociada a la fila f y la columna c.
 }
 Procedure DesocultarAdyacentes(f, c : Integer; Var t : Tablero; Var libres : ListaPos);
+Var 
+  i, j : Integer;
 Begin
+  For i := (f - 1) To (f + 1) Do 
+    For j := (c - 1) To (c + 1) Do 
+      Desocultar(i, j, t, libres);
 End;
 
 {
