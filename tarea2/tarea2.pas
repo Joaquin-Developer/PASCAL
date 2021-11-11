@@ -176,8 +176,7 @@ oculta y ser Libre. En otro caso devuelve false.
 }
 Function EsTableroCompleto(t : Tablero): Boolean;
 Var
-  i : RangoFilas;
-  j : RangoColum;
+  i, j : Integer;
   tableroCompleto: Boolean;
 Begin
   tableroCompleto := True;
@@ -186,9 +185,9 @@ Begin
   // Recorro el tablero hasta que haya una casilla que sea oculta y libre
   // o hasta llegar al ultimo elemento del tablero
 
-  While (i <= CANT_FIL) Or (Not tableroCompleto) Do
+  While (i <= CANT_FIL) Or (tableroCompleto) Do
   Begin
-    While (j <= CANT_COL) Or (Not tableroCompleto) Do 
+    While (j <= CANT_COL) Or (tableroCompleto) Do 
     Begin 
       If (t[i, j].oculto) And (t[i, j].tipo = Libre) Then 
         tableroCompleto := False;
@@ -198,5 +197,4 @@ Begin
   End;
 
   EsTableroCompleto := tableroCompleto
-
 End;
