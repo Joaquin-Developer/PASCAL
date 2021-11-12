@@ -151,35 +151,38 @@ adyacentes que cumplan con estas condiciones.
 Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
 Var 
   libres : ListaPos;
-  i, j: Integer;
   pos: Posicion;
 Begin
   pos.fila := f;
   pos.columna := c;
   // Inicalizo la Lista y los elementos del record:
   // Lista vacia al comienzo, apunta a null:
-  libres := Nil;
+
+  If (t[pos.fila, pos.columna].tipo = Libre) And (CalcularMinasAdyacentes(pos.fila, pos.columna, t) = 0) Then
+  Begin
+    New(libres);
+    libres^.pos := pos;
+  End
+  Else
+  Begin
+    libres := Nil;
+  End;
+
+
   // Desoculto posicion inicial:
   Desocultar(pos.fila, pos.columna, t, libres);
 
-  Repeat
-    PrimeraPosicion(pos, libres);
+  While libres <> Nil Do 
+  Begin
     With pos Do 
     Begin 
+      If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then 
         DesocultarAdyacentes(fila, columna, t, libres);
-      // If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then 
-      // Begin 
-      // End;
+      Begin 
+      End;
     End;
-
-  Until libres = Nil;
-
-
-
-  // While libres <> Nil Do 
-  // Begin 
-
-  // End;
+    PrimeraPosicion(pos, libres);
+  End;
 
 
 End;
