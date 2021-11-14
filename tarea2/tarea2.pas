@@ -48,6 +48,9 @@ End;
 
 
 // Sub programa auxiliar:
+{
+  Devuelve el total de minas adyacentes que tiene la casilla dada por su fila y coulmna (f, c)
+}
 Function CalcularMinasAdyacentes(f, c: Integer; t: Tablero): Integer;
 Var 
   i, j, minasAdyacentes : Integer;
@@ -56,7 +59,7 @@ Begin
 
   For i := (f - 1) To (f + 1) Do 
     For j := (c - 1) To (c + 1) Do 
-      If (i <> f) And (j <> c) And (EsPosicionValida(i, j)) And (t[i, j].tipo = Mina) Then 
+      If ((i <> f) And (j <> c)) And (EsPosicionValida(i, j)) And (t[i, j].tipo = Mina) Then 
         minasAdyacentes := minasAdyacentes + 1;
 
   CalcularMinasAdyacentes := minasAdyacentes
@@ -196,33 +199,20 @@ Var
   i, j : Integer;
   tableroCompleto: Boolean;
 Begin
-  tableroCompleto := True;
+  tableroCompleto := False;
   i := 1;
   j := 1;
   // Recorro el tablero hasta que haya una casilla que sea oculta y libre
   // o hasta llegar al ultimo elemento del tablero
 
-
-  For i := 1 To CANT_FIL Do
-  Begin 
-    For j := 1 To CANT_COL Do
-    Begin 
+  Repeat 
+    Repeat 
       If (t[i, j].oculto) And (t[i, j].tipo = Libre) Then 
         tableroCompleto := False;
-    End;
-  End;
-
-
-  // While (i <= CANT_FIL) Or (tableroCompleto) Do
-  // Begin
-  //   While (j <= CANT_COL) Or (tableroCompleto) Do 
-  //   Begin 
-  //     If (t[i, j].oculto) And (t[i, j].tipo = Libre) Then 
-  //       tableroCompleto := False;
-  //     j := j + 1
-  //   End;
-  //   i := i + 1 
-  // End;
+      j := j + 1;
+    Until (j > CANT_COL) Or (Not tableroCompleto);
+    i := i + 1;
+  Until (i > CANT_FIl) Or (Not tableroCompleto); 
 
   EsTableroCompleto := tableroCompleto
 End;
