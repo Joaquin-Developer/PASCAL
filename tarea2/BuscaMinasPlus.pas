@@ -5,12 +5,10 @@
    Programa BuscaMinas
 }
 
+program BuscaMinasPlus;
 
-program BuscaMinas;
-
-
-{ Con esta directiva queda incluido el archivo estructura.pas }
-{$INCLUDE estructura.pas}
+{ Con esta directiva queda incluido el archivo estructuraPlus.pas }
+{$INCLUDE estructuraPlus.pas}
 
 { Con esta directiva queda incluido el archivo tarea2.pas }
 {$INCLUDE tarea2.pas}
