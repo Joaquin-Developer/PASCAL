@@ -133,7 +133,7 @@ Var
 Begin
   For i := (f - 1) To (f + 1) Do 
     For j := (c - 1) To (c + 1) Do
-      If EsPosicionValida(i, j) And (i <> f) And (j <> c) Then 
+      If (EsPosicionValida(i, j)) Then 
         Desocultar(i, j, t, libres);
 End;
 
@@ -162,10 +162,7 @@ Begin
     While libres <> Nil Do 
     Begin
       PrimeraPosicion(pos, libres);
-      With pos Do 
-      Begin 
-        DesocultarAdyacentes(fila, columna, t, libres);
-      End;
+      DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
     End;
   End;
 
