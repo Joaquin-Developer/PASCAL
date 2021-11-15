@@ -156,11 +156,15 @@ Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
 Var 
   libres, aux : ListaPos;
   pos: Posicion;
+  celda: CeldaPos;
 Begin
   pos.fila := f;
   pos.columna := c;
   // Inicializo lista vacía:
-  New(libres);
+  // New(libres);
+  // libres^.pos := pos;
+  // libres^.sig := NIl;
+
   libres := Nil;
   // Desoculto:
   Desocultar(f, c, t, libres);
@@ -174,18 +178,18 @@ Begin
   // repito esto mientras tenga elementos en libres
   While libres <> Nil Do 
   Begin 
+    DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
     PrimeraPosicion(pos, libres);
-    // DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
+    Desocultar(pos.fila, pos.columna, t, libres);
+    DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
+    // With pos Do 
+    // Begin 
+    //   If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then
+    //     DesocultarAdyacentes(fila, columna, t, libres);
     // PrimeraPosicion(pos, libres);
-    // Desocultar(pos.fila, pos.columna, t, libres);
-    // DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
-    With pos Do 
-    Begin 
-      If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then
-        DesocultarAdyacentes(fila, columna, t, libres);
-    End;
+    // End;
+  // Dispose(libres)
   End;
-  Dispose(libres)
 
 
 End;
