@@ -149,7 +149,6 @@ Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
 Var 
   libres : ListaPos;
   pos: Posicion;
-  celda: CeldaPos;
 Begin
   // Inicializo lista vacía:
   libres := Nil;
