@@ -115,12 +115,13 @@ Procedure Desocultar(f, c : Integer; Var t : Tablero; Var libres : ListaPos);
 Var 
   pos : Posicion;
 Begin
-  If (EsPosicionValida(f, c)) And (t[f, c].tipo = Libre) Then 
+  If (EsPosicionValida(f, c)) And (t[f, c].tipo = Libre) And (t[f, c].oculto) Then 
   Begin
     t[f, c].oculto := False;
 
     If (CalcularMinasAdyacentes(f, c, t) = 0) Then
     Begin
+    // SI no tiene minas al rededor, se agrega a libres.
       pos.fila := f;
       pos.columna := c; 
       AgregarAlFinal(pos, libres)
@@ -160,58 +161,32 @@ Begin
   pos.columna := c;
   // Inicializo lista vacía:
   New(libres);
-  // libres := Nil;
-  libres^.pos := pos;
-  // libres^.sig := Nil;
-
+  libres := Nil;
+  // Desoculto:
   Desocultar(f, c, t, libres);
+  // quito casilla de libres:
+  // PrimeraPosicion(pos, libres);
+  // Dispose(libres);
+  // // desoculto adyacentes:
+  If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then
+    DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
 
-  If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
-  Begin
-    While libres <> Nil Do 
-    Begin
-      If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
-      Begin 
-        DesocultarAdyacentes(f, c, t, libres);
-      End;
-
-    End;
-  End; 
-
-
-  (*
-
-  pos.fila := f;
-  pos.columna := c;
-  // Inicalizo la Lista y los elementos del record:
-  // Lista vacia al comienzo, apunta a null:
-
-  If (t[pos.fila, pos.columna].tipo = Libre) And (CalcularMinasAdyacentes(pos.fila, pos.columna, t) = 0) Then
-  Begin
-    New(libres);
-    libres^.pos := pos;
-  End
-  Else
-  Begin
-    libres := Nil;
-  End;
-
-
-  // Desoculto posicion inicial:
-  Desocultar(pos.fila, pos.columna, t, libres);
-
+  // repito esto mientras tenga elementos en libres
   While libres <> Nil Do 
-  Begin
+  Begin 
+    PrimeraPosicion(pos, libres);
+    // DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
+    // PrimeraPosicion(pos, libres);
+    // Desocultar(pos.fila, pos.columna, t, libres);
+    // DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
     With pos Do 
     Begin 
-      If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then 
+      If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then
         DesocultarAdyacentes(fila, columna, t, libres);
-      Begin 
-      End;
     End;
-    PrimeraPosicion(pos, libres);
   End;
-  *)
+  Dispose(libres)
+
 
 End;
 
@@ -221,7 +196,8 @@ oculta y ser Libre. En otro caso devuelve false.
 }
 Function EsTableroCompleto(t : Tablero): Boolean;
 Var
-  i, j : Integer;
+  i : RangoFilas;
+  j : RangoColum;
   tableroCompleto: Boolean;
 Begin
   tableroCompleto := True;
@@ -230,14 +206,21 @@ Begin
   // Recorro el tablero hasta que haya una casilla que sea oculta y libre
   // o hasta llegar al ultimo elemento del tablero
 
-  Repeat 
-    Repeat 
+  For i := 1 To CANT_FIL Do
+  Begin 
+    For j := 1 To CANT_COL Do
       If (t[i, j].oculto) And (t[i, j].tipo = Libre) Then 
         tableroCompleto := False;
-      j := j + 1;
-    Until (j > CANT_COL) Or (Not tableroCompleto);
-    i := i + 1;
-  Until (i > CANT_FIl) Or (Not tableroCompleto); 
+  End;
+
+  // Repeat 
+  //   Repeat 
+  //     If (t[i, j].oculto) And (t[i, j].tipo = Libre) Then 
+  //       tableroCompleto := False;
+  //     i := i + 1;
+  //   Until (i > CANT_FIL) Or (Not tableroCompleto);
+  //   j := j + 1;
+  // Until (j > CANT_COL) Or (Not tableroCompleto); 
 
   EsTableroCompleto := tableroCompleto
 End;
