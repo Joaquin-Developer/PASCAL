@@ -58,28 +58,38 @@ son minas.
 Procedure AgregarMinas(m : Minas; Var t : Tablero);
 Var 
   i : 0..MAX_MIN;
-  f : RangoFilas;
-  c : RangoColum;
-  a, b : Integer;
+  f, fil : RangoFilas;
+  c, col : RangoColum;
+  a, b, ady : Integer;
 Begin
   // Recorro el array con tope Minas
   // Por cada mina obtengo su posicion, y modifico el tablero t
   For i := 1 To m.tope Do 
   Begin 
-    With m.elems[i] Do
-      t[fila, columna].tipo := Mina;
+    f := m.elems[i].fila;
+    c := m.elems[i].columna;
+    t[f, c].tipo := Mina;
   End;
 
-  For f := 1 To CANT_FIL Do
+  For fil := 1 To CANT_FIL Do
   Begin 
-    For c := 1 To CANT_COL Do
+    For col := 1 To CANT_COL Do
     Begin 
-      If t[f, c].tipo = Libre Then 
-      Begin
-        For a := (f - 1) To (f + 1) Do 
-          For b := (c - 1) To (c + 1) Do 
-            If ((a <> f) And (b <> c)) And (EsPosicionValida(a, b)) And (t[a, b].tipo = Mina) Then 
-              t[f, c].minasAlrededor := t[f, c].minasAlrededor + 1;
+      //Asignar el valor del campo minas Alrededor si t[fil, col] es libre:
+      If t[fil, col].tipo = Libre Then 
+      Begin 
+        ady := 0;
+        // recorro minas adyacentes:
+        For a := (fil - 1) To (fil + 1) Do 
+        Begin
+          For b := (col - 1) To (col + 1) Do 
+          Begin 
+            // Calcular minas adyacentes:
+            If EsPosicionValida(a, b) And (t[a, b].tipo = Mina) Then 
+              ady := ady + 1;
+          End; 
+        End;
+        t[fil, col].minasAlrededor := ady;
       End;
     End;
   End;
@@ -146,7 +156,7 @@ Begin
   // Desoculto:
   Desocultar(f, c, t, libres);
   // si es libre y no tiene minas al rededor, desoculto adyacentes:
-  If (t[f, c].tipo = Libre) And (t[f, c].minasAlrededor = 0)Then
+  If (t[f, c].tipo = Libre) And (t[f, c].minasAlrededor = 0) Then
   Begin
      
     While libres <> Nil Do 
