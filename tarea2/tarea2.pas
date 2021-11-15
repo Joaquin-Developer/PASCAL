@@ -74,15 +74,12 @@ Begin
   Begin 
     For c := 1 To CANT_COL Do
     Begin 
-      With t[f, c] Do 
+      If t[f, c].tipo = Libre Then 
       Begin
-        If tipo = Libre Then 
-        Begin
-          For a := (f - 1) To (f + 1) Do 
-            For b := (c - 1) To (c + 1) Do 
-              If ((a <> f) And (b <> c)) And (EsPosicionValida(a, b)) And (t[a, b].tipo = Mina) Then 
-                minasAdyacentes := minasAdyacentes + 1;
-        End;
+        For a := (f - 1) To (f + 1) Do 
+          For b := (c - 1) To (c + 1) Do 
+            If ((a <> f) And (b <> c)) And (EsPosicionValida(a, b)) And (t[a, b].tipo = Mina) Then 
+              t[f, c].minasAlrededor := t[f, c].minasAlrededor + 1;
       End;
     End;
   End;
@@ -105,7 +102,7 @@ Begin
   Begin
     t[f, c].oculto := False;
 
-    If (CalcularMinasAdyacentes(f, c, t) = 0) Then
+    If (t[f, c].minasAlrededor = 0) Then
     Begin
     // SI no tiene minas al rededor, se agrega a libres.
       pos.fila := f;
@@ -144,31 +141,24 @@ Var
   pos: Posicion;
   celda: CeldaPos;
 Begin
-  pos.fila := f;
-  pos.columna := c;
   // Inicializo lista vacía:
   libres := Nil;
   // Desoculto:
   Desocultar(f, c, t, libres);
   // si es libre y no tiene minas al rededor, desoculto adyacentes:
-  If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then
+  If (t[f, c].tipo = Libre) And (t[f, c].minasAlrededor = 0)Then
   Begin
-    DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
-    // repito esto mientras tenga elementos en libres
+     
     While libres <> Nil Do 
     Begin
       PrimeraPosicion(pos, libres);
       With pos Do 
       Begin 
-        If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then
-          DesocultarAdyacentes(fila, columna, t, libres);
+        DesocultarAdyacentes(fila, columna, t, libres);
       End;
     End;
   End;
 
-
-  // Librero la memoria:
-  // Dispose(libres)   // no es necesario .-
 End;
 
 {
