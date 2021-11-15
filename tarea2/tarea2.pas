@@ -199,7 +199,7 @@ Var
   i, j : Integer;
   tableroCompleto: Boolean;
 Begin
-  tableroCompleto := False;
+  tableroCompleto := True;
   i := 1;
   j := 1;
   // Recorro el tablero hasta que haya una casilla que sea oculta y libre
