@@ -83,7 +83,7 @@ Begin
   // Recorro el array con tope Minas
   // Por cada mina obtengo su posicion, y modifico el tablero t
   {
-    NOTA: Algoritmo ineficiente - Mejorarlo
+    NOTA: Algoritmo un poco ineficiente - Mejorarlo
   }
   For i := 1 To m.tope Do 
   Begin 
@@ -153,9 +153,34 @@ adyacentes que cumplan con estas condiciones.
 }
 Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
 Var 
-  libres : ListaPos;
+  libres, aux : ListaPos;
   pos: Posicion;
 Begin
+  pos.fila := f;
+  pos.columna := c;
+  // Inicializo lista vacía:
+  New(libres);
+  // libres := Nil;
+  libres^.pos := pos;
+  // libres^.sig := Nil;
+
+  Desocultar(f, c, t, libres);
+
+  If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
+  Begin
+    While libres <> Nil Do 
+    Begin
+      If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then 
+      Begin 
+        DesocultarAdyacentes(f, c, t, libres);
+      End;
+
+    End;
+  End; 
+
+
+  (*
+
   pos.fila := f;
   pos.columna := c;
   // Inicalizo la Lista y los elementos del record:
@@ -186,7 +211,7 @@ Begin
     End;
     PrimeraPosicion(pos, libres);
   End;
-
+  *)
 
 End;
 
