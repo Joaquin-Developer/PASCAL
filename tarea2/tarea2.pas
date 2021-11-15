@@ -47,25 +47,6 @@ Begin
 End;
 
 
-// Sub programa auxiliar:
-{
-  Devuelve el total de minas adyacentes que tiene la casilla dada por su fila y coulmna (f, c)
-}
-Function CalcularMinasAdyacentes(f, c: Integer; t: Tablero): Integer;
-Var 
-  i, j, minasAdyacentes : Integer;
-Begin
-  minasAdyacentes := 0;
-
-  For i := (f - 1) To (f + 1) Do 
-    For j := (c - 1) To (c + 1) Do 
-      If ((i <> f) And (j <> c)) And (EsPosicionValida(i, j)) And (t[i, j].tipo = Mina) Then 
-        minasAdyacentes := minasAdyacentes + 1;
-
-  CalcularMinasAdyacentes := minasAdyacentes
-End;
-
-
 {
 Agrega minas al Tablero t en cada una de las casillas c correspondientes a
 posiciones contenidas en m, es decir que dichas casillas cambien su tipo a Mina.
@@ -79,12 +60,10 @@ Var
   i : 0..MAX_MIN;
   f : RangoFilas;
   c : RangoColum;
+  a, b : Integer;
 Begin
   // Recorro el array con tope Minas
   // Por cada mina obtengo su posicion, y modifico el tablero t
-  {
-    NOTA: Algoritmo un poco ineficiente - Mejorarlo
-  }
   For i := 1 To m.tope Do 
   Begin 
     With m.elems[i] Do
@@ -96,8 +75,15 @@ Begin
     For c := 1 To CANT_COL Do
     Begin 
       With t[f, c] Do 
+      Begin
         If tipo = Libre Then 
-          minasAlrededor := CalcularMinasAdyacentes(f, c, t);
+        Begin
+          For a := (f - 1) To (f + 1) Do 
+            For b := (c - 1) To (c + 1) Do 
+              If ((a <> f) And (b <> c)) And (EsPosicionValida(a, b)) And (t[a, b].tipo = Mina) Then 
+                minasAdyacentes := minasAdyacentes + 1;
+        End;
+      End;
     End;
   End;
   
@@ -154,44 +140,35 @@ adyacentes que cumplan con estas condiciones.
 }
 Procedure DesocultarDesde(f : RangoFilas;  c : RangoColum; Var t : Tablero);
 Var 
-  libres, aux : ListaPos;
+  libres : ListaPos;
   pos: Posicion;
   celda: CeldaPos;
 Begin
   pos.fila := f;
   pos.columna := c;
   // Inicializo lista vacía:
-  // New(libres);
-  // libres^.pos := pos;
-  // libres^.sig := NIl;
-
   libres := Nil;
   // Desoculto:
   Desocultar(f, c, t, libres);
-  // quito casilla de libres:
-  // PrimeraPosicion(pos, libres);
-  // Dispose(libres);
-  // // desoculto adyacentes:
+  // si es libre y no tiene minas al rededor, desoculto adyacentes:
   If (t[f, c].tipo = Libre) And (CalcularMinasAdyacentes(f, c, t) = 0) Then
+  Begin
     DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
-
-  // repito esto mientras tenga elementos en libres
-  While libres <> Nil Do 
-  Begin 
-    DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
-    PrimeraPosicion(pos, libres);
-    Desocultar(pos.fila, pos.columna, t, libres);
-    DesocultarAdyacentes(pos.fila, pos.columna, t, libres);
-    // With pos Do 
-    // Begin 
-    //   If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then
-    //     DesocultarAdyacentes(fila, columna, t, libres);
-    // PrimeraPosicion(pos, libres);
-    // End;
-  // Dispose(libres)
+    // repito esto mientras tenga elementos en libres
+    While libres <> Nil Do 
+    Begin
+      PrimeraPosicion(pos, libres);
+      With pos Do 
+      Begin 
+        If (t[fila, columna].tipo = Libre) And (CalcularMinasAdyacentes(fila, columna, t) = 0) Then
+          DesocultarAdyacentes(fila, columna, t, libres);
+      End;
+    End;
   End;
 
 
+  // Librero la memoria:
+  // Dispose(libres)   // no es necesario .-
 End;
 
 {
