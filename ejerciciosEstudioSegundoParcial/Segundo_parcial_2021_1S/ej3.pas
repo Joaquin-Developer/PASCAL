@@ -54,6 +54,30 @@ Begin
 
 End;
 
+{
+    Parte B)
+Escribir una función masDeUnMaximo, que dada una estadística est calculada como se indica en la parte anterior, retorna true si
+existe más de una letra que se repita el número máximo de veces y false en caso contrario. En otras palabras, verifica si hay más
+letras que se repitan la misma cantidad de veces que est.mas.
+}
+Function masDeUnMaximo(est: TEstadistica): Boolean;
+Var 
+    masMaximos: Boolean;
+    l: Char;
+Begin
+    masMaximos := False;
+    l := 'A';
+
+    While (Not masMaximos) Or (l <= 'Z') Do 
+    Begin
+        If est.cantidades[l] = est.cantidades[est.mas] Then 
+            masMaximos := True;
+
+        l := Succ(l); 
+    End;
+
+    masDeUnMaximo := masMaximos
+End;
 
 Begin
     // For letra := 'A' To 'Z' Do 
