@@ -75,6 +75,7 @@ Var
     miLista : Lista;
 
 Begin
+    { Pruebas: }
     Add(14, miLista);
     Add(11, miLista);
     Add(5, miLista);
